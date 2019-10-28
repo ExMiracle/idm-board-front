@@ -11,6 +11,7 @@ const Posts = ({ posts }) => {
             <h5 className="card-title">{post.title}</h5>
             <h6 className="card-subtitle mb-2 text-muted">{post.date_posted}</h6>
             <p className="card-text">{post.content}</p>
+            <img  className="img-fluid" src={post.image} />
           </div>
         </div>
       ))}
