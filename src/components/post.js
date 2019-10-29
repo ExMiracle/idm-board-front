@@ -5,16 +5,23 @@ const Posts = ({ posts }) => {
     <div>
       <center><h1>Anonymous Board</h1></center>
       <div className="container">
-      {posts.map((post) => (
-        <div className="card">
-          <div className="card-body">
-            <h5 className="card-title">{post.title}</h5>
-            <h6 className="card-subtitle mb-2 text-muted">{post.date_posted}</h6>
-            <p className="card-text">{post.content}</p>
-            <img  className="img-fluid" src={post.image} />
+      {posts.map((post) => {
+
+        const post_date = new Date(post.date_posted)
+        const date = post_date.getDate() + "/" + post_date.getMonth() + "/" + post_date.getFullYear().toString().slice(-2);
+        const time = post_date.getHours() + ":" + post_date.getMinutes() + ":" + post_date.getSeconds()
+        const formatted_date = date + " " + time
+
+        return (
+          <div className="card bg-light">
+          <span className="text-muted header">{formatted_date}</span>
+            <div className="card-body">
+              <img  className="img imagemarg" src={post.image} />
+              <article className="margin10 d-inline align-top">{post.content}</article>
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      })}
       </div>
     </div>
   )

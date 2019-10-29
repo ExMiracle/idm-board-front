@@ -11,3 +11,30 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.post{
+  word-wrap: break-word;
+}
+
+.imagemarg {
+  margin: 0 5px 0 0;
+  max-height: 200px;
+  max-width: 200px;
+}
+
+.cardpad {
+  padding: 0;
+}
+
+.margin10 {
+  margin: 10px;
+}
+
+.bottom-margin {
+  margin-bottom: 5px;
+}
+
+.header {
+  font-size: 14px;
+  padding: 3px;
+}

@@ -9,25 +9,20 @@ class App extends Component {
     this.state = {
       title: '',
       content: '',
+      file: null,
+      filePreviewUrl: '',
       posts: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
     }
-
-  scrollToBottom = () => {
-  this.messagesEnd.scrollIntoView({ behavior: "smooth" });
-  }
 
   apiPostSend(data) {
     fetch("http://localhost:8000/api/posts/",
       {
         method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-          },
-        body: JSON.stringify(data)
+        body: data
       })
     .then(
     fetch('http://localhost:8000/api/posts/')
@@ -45,14 +40,33 @@ class App extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.apiPostSend(this.state)
-    console.log(this.state.title);
-    console.log(this.state.content);
+    console.log(this.state);
+    let form_data = new FormData();
+    if (this.state.file) {
+      form_data.append('image', this.state.file);
+    }
+    form_data.append('title', this.state.title);
+    form_data.append('content', this.state.content);
+    this.apiPostSend(form_data)
     this.setState({title: '',
-                   content: ''
+                   content: '',
+                   file: null,
+                   filePreviewUrl: '',
                   })
-
     };
+
+  handleImageChange(event) {
+    let reader = new FileReader();
+    let file = event.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        filePreviewUrl: reader.result
+      });
+    }
+    reader.readAsDataURL(file)
+  }
 
   componentDidMount() {
     fetch('http://localhost:8000/api/posts/')
@@ -61,24 +75,29 @@ class App extends Component {
       this.setState({ posts: data.results })
     })
     .catch(console.log)
-
   }
 
-  render () {
+  render() {
+    let {filePreviewUrl} = this.state;
+    let $filePreview = null;
+    if (filePreviewUrl) {
+      $filePreview = (<img src={filePreviewUrl} />);
+    }
+
     return (
       <div className="container">
         <Posts posts={this.state.posts} />
-        <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input type="text" name="title" value={this.state.title} onChange={this.handleChange} />
-          <input type="text" name="content" value={this.state.content} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-      <div style={{ float:"left", clear: "both" }}
-           ref={(el) => { this.messagesEnd = el; }}>
-      </div>
+        <div className="container">
+          <form className="form-group margin10" onSubmit={this.handleSubmit}>
+            <textarea type="text" name="content" className="form-control bottom-margin" value={this.state.content} onChange={this.handleChange} rows="4" />
+            <div className="custom-file bottom-margin">
+              <input type="file" className="custom-file-input" id="customFile" onChange={this.handleImageChange} />
+              <label className="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <input className="btn" type="submit" value="Submit" />
+          </form>
+        </div>
+      {$filePreview}
       </div>
     );
   }
