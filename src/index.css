@@ -38,3 +38,12 @@ code {
   font-size: 14px;
   padding: 3px;
 }
+
+.collapse {
+  display: none
+}
+
+.collapse.in {
+  display: block
+}
+
