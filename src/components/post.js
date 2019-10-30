@@ -1,4 +1,5 @@
 import React from 'react'
+import {BrowserRouter, Link} from 'react-router-dom'
 
 const Posts = ({ posts }) => {
   return (
@@ -14,7 +15,7 @@ const Posts = ({ posts }) => {
           <div className="card bg-light mb-1">
           <div className="d-inline-flex">
           <span className="text-muted">{formatted_date} |</span>
-          <span className="text-muted">| <a href={post.url}>№ {post.id}</a></span>
+          <span className="text-muted">| <Link to={`/thread/${post.id}`}>№ {post.id}</Link></span>
           </div>
             <div className="card-body">
               <img  className="img imagemarg" src={post.image} />

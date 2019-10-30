@@ -3,6 +3,7 @@ import Posts from './components/post';
 import Form from './components/form';
 
 
+
 class App extends Component {
 
   constructor(props) {
@@ -10,32 +11,30 @@ class App extends Component {
     this.state = {
       posts: [],
     };
-    this.onSuccess = this.onSuccess.bind(this)
-   }
+    this.apiGet = this.apiGet.bind(this);
+    console.log('hello')
+  }
 
-  componentDidMount() {
+  apiGet() {
+    // let url = 'http://localhost:8000/api/posts/index/'
+    // let thread =
     fetch('http://localhost:8000/api/posts/index/')
     .then(res => res.json())
     .then((data) => {
-      this.setState({ posts: data })
+     this.setState({ posts: data })
     })
     .catch(console.log)
+    console.log('api get');
   }
 
-  onSuccess() {
-    fetch('http://localhost:8000/api/posts/index/')
-      .then(res => res.json())
-      .then((data) => {
-        this.setState({ posts: data })
-      })
-      .catch(console.log);
-    console.log('api get');
+  componentDidMount() {
+    this.apiGet();
   }
 
   render() {
     return (
       <div className="container">
-        <Form onSuccess={this.onSuccess} />
+        <Form apiGet={this.apiGet} buttonText={'Start a thread'} />
         <Posts posts={this.state.posts} />
       </div>
     );

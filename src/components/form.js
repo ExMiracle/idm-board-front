@@ -22,12 +22,29 @@ class Form extends Component {
   }
 
   apiPostSend(data) {
-    fetch("http://localhost:8000/api/posts/new_thread/",
+    let to_create = this.props.reply_to;
+    if (to_create) {
+      this.url = "http://localhost:8000/api/posts/"+to_create+"/new_reply/";
+    } else {
+      this.url = "http://localhost:8000/api/posts/new_thread/";
+    }
+    fetch(this.url,
       {
         method: "POST",
         body: data
       })
-    }
+      // .then(function(response) {
+      //   console.log(response)
+      //   console.log(typeof(this.props.apiGet()))
+      //   if (!response.ok) {
+      //     throw new Error(response.status);
+      //   } else {
+      //     this.props.apiGet();
+      //   }})
+      console.log('Post sent');
+      this.props.apiGet();
+    };
+
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -47,8 +64,7 @@ class Form extends Component {
                    file: null,
                    filePreviewUrl: '',
                   })
-    console.log('Post sent');
-    this.props.onSuccess();
+    // this.props.apiGet();
     };
 
   handleImageChange(event) {
@@ -72,12 +88,12 @@ class Form extends Component {
   }
 
   return (
-    <div className="container w-50 p-3">
-      <button className="btn d-block m-auto" onClick={this.toggle.bind(this)}>Start a thread</button>
+    <div className="container w-55 p-3">
+      <button className="btn d-block m-auto" onClick={this.toggle.bind(this)}>{this.props.buttonText}</button>
       <div id="demo" className={"collapse" + (this.state.open ? ' in' : '')}>
         <div>
           <div className="container">
-              <form className="form-group margin10" onSubmit={this.handleSubmit}>
+              <form className="form-group m-10" onSubmit={this.handleSubmit}>
                 <textarea type="text" name="content" className="form-control bottom-margin" value={this.state.content} onChange={this.handleChange} rows="4" />
                 <div className="custom-file bottom-margin">
                   <input type="file" className="custom-file-input" id="customFile" onChange={this.handleImageChange} />
