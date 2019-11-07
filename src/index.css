@@ -47,3 +47,9 @@ code {
   display: block
 }
 
+.float-reply {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 200px;
+  align: right;
+}

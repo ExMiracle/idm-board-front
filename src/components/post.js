@@ -1,5 +1,6 @@
 import React from 'react'
 import {BrowserRouter, Link} from 'react-router-dom'
+import FormSticky from './postSticky'
 
 const Posts = ({ posts }) => {
   return (
@@ -15,7 +16,10 @@ const Posts = ({ posts }) => {
           <div className="card bg-light mb-1">
           <div className="d-inline-flex">
           <span className="text-muted">{formatted_date} |</span>
-          <span className="text-muted">| <Link to={`/thread/${post.id}`}>№ {post.id}</Link></span>
+          <FormSticky post={post.id} />
+          <span className="text-muted text-decoration-none">
+            <Link className="text-muted text-decoration-none" to={`/thread/${post.id}`}>| Reply</Link>
+          </span>
           </div>
             <div className="card-body">
               <img  className="img imagemarg" src={post.image} />
