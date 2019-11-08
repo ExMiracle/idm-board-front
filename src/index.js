@@ -1,22 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
+import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom'
 import App from './App'
 import Thread from './thread'
-import Notfound from './notfound'
 
 const Page = () => (
   <div>
-    <Header />
-    <Main />
+    <Header/>
+    <Main/>
   </div>
 )
 
 const Header = () => (
   <header>
     <nav>
-      <Link to='/'><center><h1 className="text-dark">Anonymous Board</h1></center></Link>
+      <Link to='/'>
+        <center><h1 className="text-dark text-decoration-none">Anonymous Board</h1></center>
+      </Link>
     </nav>
   </header>
 )
@@ -31,9 +32,9 @@ const Main = () => (
 )
 
 ReactDOM.render((
-  <Router>
-    <Page />
-  </Router>
+    <Router>
+      <Page/>
+    </Router>
   ),
   document.getElementById('root')
 )

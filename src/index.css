@@ -48,8 +48,9 @@ code {
 }
 
 .float-reply {
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
+  /*position: -webkit-sticky; !* Safari *!*/
+  /*position: sticky;*/
   top: 200px;
-  align: right;
+  color: black;
+  background: #000;
 }

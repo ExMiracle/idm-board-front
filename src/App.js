@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Posts from './components/post';
-import Form from './components/form';
-
+import ButtonForm from './components/buttonForm';
 
 
 class App extends Component {
@@ -19,11 +18,11 @@ class App extends Component {
     // let url = 'http://localhost:8000/api/posts/index/'
     // let thread =
     fetch('http://localhost:8000/api/posts/index/')
-    .then(res => res.json())
-    .then((data) => {
-     this.setState({ posts: data })
-    })
-    .catch(console.log)
+      .then(res => res.json())
+      .then((data) => {
+        this.setState({posts: data})
+      })
+      .catch(console.log)
     console.log('api get');
   }
 
@@ -34,8 +33,8 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <Form apiGet={this.apiGet} buttonText={'Start a thread'} />
-        <Posts posts={this.state.posts} />
+        <ButtonForm apiGet={this.apiGet} buttonText={'Start a thread'}/>
+        <Posts posts={this.state.posts} apiGet={this.apiGet}/>
       </div>
     );
   }
